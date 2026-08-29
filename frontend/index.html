@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mastery — Socratic Scaffolding + Telemetry Learning Platform</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-theme">
+  <!-- Top Navigation -->
+  <header class="app-header">
+    <div class="header-left">
+      <div class="logo-badge">
+        <span class="logo-icon">⚡</span>
+        <span class="logo-text">MASTERY</span>
+        <span class="version-tag">Agentic v1.0</span>
+      </div>
+      <div class="header-tagline">Socratic Scaffolding & Silent Telemetry Engine</div>
+    </div>
+    
+    <div class="nav-tabs">
+      <button class="nav-tab active" id="tab-learner" onclick="switchView('learner')">
+        <span class="tab-icon">🎯</span> Learner Scenario Loop
+      </button>
+      <button class="nav-tab" id="tab-creator" onclick="switchView('creator')">
+        <span class="tab-icon">📊</span> Creator Telemetry Dashboard
+      </button>
+    </div>
+
+    <div class="header-right">
+      <div class="telemetry-pulse">
+        <span class="pulse-dot"></span>
+        <span class="pulse-label">Telemetry: Active</span>
+      </div>
+      <button class="theme-toggle" id="theme-btn" onclick="toggleTheme()" title="Toggle Theme">🌓</button>
+    </div>
+  </header>
+
+  <!-- Main Content Container -->
+  <main class="main-container">
+
+    <!-- VIEW 1: LEARNER SCENARIO & SOCRATIC LOOP -->
+    <section id="view-learner" class="view-panel active">
+      <div class="layout-grid">
+        
+        <!-- Left: Scenario & Decision Arena -->
+        <div class="card scenario-card">
+          <div class="card-header">
+            <div class="scenario-meta">
+              <span class="badge badge-danger">High-Stakes Scenario #1</span>
+              <span class="badge badge-neutral">Incident Response</span>
+              <span class="badge badge-accent" id="difficulty-badge">Difficulty: Level 2</span>
+            </div>
+            <div class="timer-widget" id="timer-display">
+              <span class="timer-icon">⏱</span> <span id="time-count">00:14</span>
+            </div>
+          </div>
+
+          <div class="scenario-body">
+            <h1 class="scenario-title">The 10-Minute Launch Override Crisis</h1>
+            <div class="context-box">
+              <div class="context-avatar">🚨</div>
+              <div class="context-text">
+                <p><strong>Context:</strong> You are 10 minutes before a high-profile enterprise product launch. The client VP is on the emergency line demanding an immediate override on a pending security check to hit their press embargo.</p>
+                <p class="consequence-warning">⚠️ <em>Bypassing the check ensures an on-time kickoff but violates security protocol. What do you do?</em></p>
+              </div>
+            </div>
+
+            <!-- Decision Options -->
+            <div class="decision-section">
+              <h3 class="section-heading">Make Your Decision:</h3>
+              <div class="branch-options" id="branch-container">
+                <div class="branch-card" onclick="selectBranch(1, false, this)">
+                  <div class="branch-indicator">A</div>
+                  <div class="branch-content">
+                    <div class="branch-text">Approve the override immediately to preserve client relationship and hit the press deadline.</div>
+                    <div class="branch-hint">Favors speed & immediate relationship over protocol</div>
+                  </div>
+                </div>
+
+                <div class="branch-card" onclick="selectBranch(2, true, this)">
+                  <div class="branch-indicator">B</div>
+                  <div class="branch-content">
+                    <div class="branch-text">Refuse the override, clearly communicate the security risk, and escalate to the Incident Commander.</div>
+                    <div class="branch-hint">Adheres to zero-trust protocol and contains vulnerability risk</div>
+                  </div>
+                </div>
+
+                <div class="branch-card" onclick="selectBranch(3, false, this)">
+                  <div class="branch-indicator">C</div>
+                  <div class="branch-content">
+                    <div class="branch-text">Quietly run a partial test while telling the client everything is approved.</div>
+                    <div class="branch-hint">Compromises visibility and risks inconsistent regional deployment</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Action Buttons & Hints -->
+            <div class="scenario-actions">
+              <button class="btn btn-secondary" onclick="requestHint()">
+                💡 Request Scaffolding Hint (<span id="hint-count">0</span> used)
+              </button>
+              <button class="btn btn-primary" id="submit-decision-btn" onclick="submitDecision()" disabled>
+                Submit Decision & Trigger Socratic Loop →
+              </button>
+            </div>
+
+            <div id="hint-box" class="hint-callout hidden">
+              <strong>💡 Scaffolding Guide:</strong> In enterprise security governance, an unverified override creates unmonitored liability. Consider what happens if an audit or exploit occurs post-launch.
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Socratic Dialogue & Realtime Telemetry -->
+        <div class="sidebar-column">
+          
+          <!-- Socratic AI Dialogue Box -->
+          <div class="card socratic-card">
+            <div class="card-header socratic-header">
+              <div class="ai-title">
+                <span class="ai-avatar">🤖</span>
+                <div>
+                  <div class="ai-name">Gemini Socratic Agent</div>
+                  <div class="ai-subtitle">SequentialAgent Orchestrator</div>
+                </div>
+              </div>
+              <div class="status-indicator">
+                <span class="status-dot"></span> Ready
+              </div>
+            </div>
+
+            <div class="socratic-dialogue-body" id="dialogue-feed">
+              <div class="chat-bubble ai-bubble">
+                <p>Welcome, learner. Review the situation carefully. When you commit to a decision, I won't just tell you if you're right or wrong—we will explore the reasoning behind your choice to build true decision mastery.</p>
+              </div>
+            </div>
+
+            <!-- Reflection Input Area -->
+            <div class="reflection-input-area hidden" id="reflection-box">
+              <label class="input-label" for="reflection-input">Your Socratic Reflection:</label>
+              <textarea id="reflection-input" rows="3" placeholder="Explain the rationale behind your choice and the downstream trade-offs..."></textarea>
+              <button class="btn btn-accent full-width" onclick="submitReflection()">Submit Reflection to Agent</button>
+            </div>
+          </div>
+
+          <!-- Live Silent Telemetry Inspector -->
+          <div class="card telemetry-card">
+            <div class="card-header">
+              <div class="telemetry-title">📡 Live Silent Telemetry Stream</div>
+              <span class="badge badge-success">Always On</span>
+            </div>
+            <div class="telemetry-feed" id="telemetry-stream">
+              <div class="telemetry-log-item">
+                <span class="log-time">[00:00]</span> Session initialized. Scenario #1 loaded.
+              </div>
+              <div class="telemetry-log-item">
+                <span class="log-time">[00:04]</span> Hesitation detected on branch options (Cognitive load: moderate).
+              </div>
+            </div>
+
+            <div class="mastery-meter-container">
+              <div class="meter-header">
+                <span>Mastery Progress (4/5 Rule):</span>
+                <span id="mastery-percent-text">0/5 Decisions (0%)</span>
+              </div>
+              <div class="meter-bar">
+                <div class="meter-fill" id="mastery-progress-bar" style="width: 0%;"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- VIEW 2: COURSE CREATOR TELEMETRY DASHBOARD -->
+    <section id="view-creator" class="view-panel">
+      <div class="dashboard-wrapper">
+        
+        <!-- Top Metrics Row -->
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-label">Course Completion Rate</div>
+            <div class="stat-value text-success">94.2%</div>
+            <div class="stat-subtext">Traditional "slide-clicker" metric</div>
+          </div>
+          
+          <div class="stat-card">
+            <div class="stat-label">Actual Decision Mastery</div>
+            <div class="stat-value text-danger">58.4%</div>
+            <div class="stat-subtext">Passed 4/5 high-stakes scenarios</div>
+          </div>
+
+          <div class="stat-card highlight-card">
+            <div class="stat-label">The Mastery Gap</div>
+            <div class="stat-value text-warning">35.8%</div>
+            <div class="stat-subtext">Completed course without mastery</div>
+          </div>
+
+          <div class="stat-card">
+            <div class="stat-label">Socratic Recovery Rate</div>
+            <div class="stat-value text-accent">+37.0%</div>
+            <div class="stat-subtext">Accuracy gain on 2nd attempt</div>
+          </div>
+        </div>
+
+        <!-- Telemetry Struggle Heatmap & Insights -->
+        <div class="dashboard-grid">
+          
+          <!-- Heatmap Table -->
+          <div class="card heatmap-card">
+            <div class="card-header">
+              <h3>🔥 Cognitive Load & Struggle Heatmap (By Scenario)</h3>
+              <span class="badge badge-neutral">Auto-Redesign Telemetry</span>
+            </div>
+            <table class="heatmap-table">
+              <thead>
+                <tr>
+                  <th>Scenario</th>
+                  <th>Avg Time</th>
+                  <th>Cognitive Load</th>
+                  <th>Struggle Index</th>
+                  <th>Drop-off Risk</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>#1: 10-Min Launch Override</strong></td>
+                  <td>14.8s</td>
+                  <td><span class="load-badge load-medium">Medium</span></td>
+                  <td>
+                    <div class="index-bar"><div class="index-fill" style="width: 42%;">42%</div></div>
+                  </td>
+                  <td><span class="badge badge-neutral">Moderate</span></td>
+                </tr>
+                <tr class="highlight-row">
+                  <td><strong>#2: Prod DB Migration Anomaly</strong></td>
+                  <td>32.4s</td>
+                  <td><span class="load-badge load-high">High Load</span></td>
+                  <td>
+                    <div class="index-bar"><div class="index-fill fill-danger" style="width: 78%;">78%</div></div>
+                  </td>
+                  <td><span class="badge badge-danger">High Friction</span></td>
+                </tr>
+                <tr>
+                  <td><strong>#3: Client Escalation Breach</strong></td>
+                  <td>11.2s</td>
+                  <td><span class="load-badge load-low">Low Load</span></td>
+                  <td>
+                    <div class="index-bar"><div class="index-fill fill-success" style="width: 24%;">24%</div></div>
+                  </td>
+                  <td><span class="badge badge-success">Low</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Actionable AI Redesign Insights -->
+          <div class="card insights-card">
+            <div class="card-header">
+              <h3>💡 Telemetry-Driven Redesign Insights</h3>
+              <span class="badge badge-accent">Gemini Telemetry Agent</span>
+            </div>
+            <div class="insights-list">
+              <div class="insight-item">
+                <div class="insight-icon">⚠️</div>
+                <div class="insight-content">
+                  <strong>Scenario #2 Bottleneck:</strong> 64% of learners freeze on the rollback decision when financial loss is mentioned. 
+                  <em>Recommendation: Add a pre-scenario decision checklist on cascading failures.</em>
+                </div>
+              </div>
+
+              <div class="insight-item">
+                <div class="insight-icon">📈</div>
+                <div class="insight-content">
+                  <strong>Socratic Dialogue Impact:</strong> Learners who engaged in reflective typing showed an 82% retention rate 30 days later vs 44% for passive readers.
+                </div>
+              </div>
+
+              <div class="insight-item">
+                <div class="insight-icon">🎯</div>
+                <div class="insight-content">
+                  <strong>Adaptive Scaffolding:</strong> 88% of learners required only Level 1 scaffolding by their 4th attempt, proving autonomous mastery progression.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <div>Built for <strong>Google All Things Agentic Hackathon</strong> | Powered by <strong>Gemini 3.5</strong>, <strong>Google ADK</strong>, and <strong>Google Cloud</strong></div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>

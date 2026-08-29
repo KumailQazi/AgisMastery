@@ -1,0 +1,47 @@
+version: "3.9"
+services:
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - APP_ENV=development
+      - DATABASE_URL=postgresql+psycopg2://mastery_user:mastery_pass@db:5432/mastery_db
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - db
+      - redis
+
+  relay:
+    build:
+      context: ./backend/relay
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - REDIS_URL=redis://redis:6379/0
+      - API_BASE_URL=http://api:8000/api
+    depends_on:
+      - redis
+      - api
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: mastery_user
+      POSTGRES_PASSWORD: mastery_pass
+      POSTGRES_DB: mastery_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+volumes:
+  pgdata:

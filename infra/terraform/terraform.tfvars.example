@@ -1,0 +1,15 @@
+# Google Cloud Project & Region
+project_id     = "your-gcp-project-id"
+region         = "us-central1"
+
+# Database Configuration
+db_password    = "MasterySecurePass2026!"
+
+# Gemini API Authentication
+gemini_api_key = "AIzaSy..."
+
+# JWT Application Secret
+secret_key     = "your-super-secret-jwt-key"
+
+# Container Image Tag
+image_tag      = "latest"

@@ -1,0 +1,80 @@
+# ==============================================================================
+# Google Cloud Build CI/CD Pipeline for Mastery
+# ==============================================================================
+steps:
+  # Step 1: Build Core API Docker Image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'build-api'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/mastery-repo/mastery-api:$COMMIT_SHA'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/mastery-repo/mastery-api:latest'
+      - './backend'
+
+  # Step 2: Build WebSocket Session Relay Image
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'build-relay'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/mastery-repo/mastery-relay:$COMMIT_SHA'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/mastery-repo/mastery-relay:latest'
+      - './backend/relay'
+
+  # Step 3: Push Images to Google Artifact Registry
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-api'
+    args:
+      - 'push'
+      - '--all-tags'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/mastery-repo/mastery-api'
+    waitFor: ['build-api']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    id: 'push-relay'
+    args:
+      - 'push'
+      - '--all-tags'
+      - '${_REGION}-docker.pkg.dev/$PROJECT_ID/mastery-repo/mastery-relay'
+    waitFor: ['build-relay']
+
+  # Step 4: Deploy mastery-api to Google Cloud Run (Public API)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'deploy-api'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'mastery-api-service'
+      - '--image=${_REGION}-docker.pkg.dev/$PROJECT_ID/mastery-repo/mastery-api:$COMMIT_SHA'
+      - '--region=${_REGION}'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+    waitFor: ['push-api']
+
+  # Step 5: Deploy mastery-relay to Google Cloud Run (Public WebSocket Relay)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    id: 'deploy-relay'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'mastery-relay-service'
+      - '--image=${_REGION}-docker.pkg.dev/$PROJECT_ID/mastery-repo/mastery-relay:$COMMIT_SHA'
+      - '--region=${_REGION}'
+      - '--platform=managed'
+      - '--allow-unauthenticated'
+    waitFor: ['push-relay']
+
+substitutions:
+  _REGION: 'us-central1'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+images:
+  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/mastery-repo/mastery-api:$COMMIT_SHA'
+  - '${_REGION}-docker.pkg.dev/$PROJECT_ID/mastery-repo/mastery-relay:$COMMIT_SHA'

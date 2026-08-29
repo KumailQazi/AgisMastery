@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Veo 8s Scenario Crisis Simulation</title>
+  <style>
+    body {
+      margin: 0;
+      background: #090d16;
+      color: #fff;
+      font-family: monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .video-frame {
+      width: 640px;
+      height: 360px;
+      background: #000;
+      border: 2px solid #ef4444;
+      border-radius: 12px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 40px rgba(239, 68, 68, 0.4);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      color: #ef4444;
+    }
+    .pulse-alert {
+      background: rgba(239, 68, 68, 0.2);
+      padding: 4px 8px;
+      border-radius: 4px;
+      animation: blink 0.8s infinite;
+    }
+    @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+    .center-content {
+      text-align: center;
+    }
+    .countdown {
+      font-size: 48px;
+      font-weight: bold;
+      color: #f59e0b;
+      text-shadow: 0 0 20px rgba(245, 158, 11, 0.8);
+    }
+    .message {
+      font-size: 14px;
+      color: #94a3b8;
+      margin-top: 10px;
+    }
+    .waveform {
+      display: flex;
+      gap: 4px;
+      height: 30px;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .bar {
+      width: 6px;
+      background: #ef4444;
+      border-radius: 2px;
+      animation: soundwave 1s infinite alternate;
+    }
+    @keyframes soundwave { 0% { height: 4px; } 100% { height: 28px; } }
+    .footer {
+      font-size: 11px;
+      color: #64748b;
+      display: flex;
+      justify-content: space-between;
+    }
+  </style>
+</head>
+<body>
+  <div class="video-frame">
+    <div class="top-bar">
+      <span class="pulse-alert">🚨 CRITICAL INCIDENT SIMULATION</span>
+      <span>VEO-2.0-SIM</span>
+    </div>
+    <div class="center-content">
+      <div class="countdown" id="timer">00:09:54</div>
+      <div class="message">GLOBAL PRODUCT LAUNCH — CLIENT SECURITY OVERRIDE ESCALATION</div>
+      <div class="waveform" style="margin-top: 20px;">
+        <div class="bar" style="animation-delay: 0.1s;"></div>
+        <div class="bar" style="animation-delay: 0.3s;"></div>
+        <div class="bar" style="animation-delay: 0.2s;"></div>
+        <div class="bar" style="animation-delay: 0.5s;"></div>
+        <div class="bar" style="animation-delay: 0.4s;"></div>
+        <div class="bar" style="animation-delay: 0.6s;"></div>
+      </div>
+    </div>
+    <div class="footer">
+      <span>LATENCY SPIKE: 400%</span>
+      <span>ZERO-TRUST GOVERNANCE: PENDING DECISION</span>
+    </div>
+  </div>
+  <p style="color: #64748b; font-size: 12px; margin-top: 15px;">Google Veo 8s Scenario Visualization Manifest</p>
+</body>
+</html>

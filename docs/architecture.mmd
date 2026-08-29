@@ -1,0 +1,47 @@
+graph TD
+    subgraph ClientLayer ["Client Layer"]
+        Learner["👤 Learner / Student"]
+        Creator["👩‍🏫 Course Creator / L&D Lead"]
+        Admin["🛡️ Enterprise Admin"]
+    end
+
+    subgraph FrontendApp ["Frontend (React 18 + Vite)"]
+        SPA["🌐 Scenario Player & Dashboard UI<br/>(Tailwind CSS + Recharts)"]
+    end
+
+    subgraph IngressGateway ["Google Cloud Run Ingress"]
+        Gateway["🚪 Cloud Run Ingress Gateway<br/>(HTTPS / Bearer JWT)"]
+    end
+
+    subgraph BackendServices ["Backend Services (Google Cloud Run)"]
+        API["🚀 mastery-api (FastAPI Core)"]
+        Orchestrator["🧠 socratic-orchestrator (Google ADK SequentialAgent)"]
+        Relay["⚡ session-relay (WebSocket / Telemetry Stream)"]
+    end
+
+    subgraph DataStorage ["Google Cloud Data & State Layer"]
+        Postgres[("🐘 Cloud SQL (PostgreSQL 16)<br/>Users, Scenarios, Mastery Progress")]
+        Firestore[("🔥 Google Cloud Firestore<br/>Silent Telemetry Events & Session State")]
+        RedisStore[("⚡ Redis Memorystore<br/>Token Cache & Celery Task Queue")]
+        SecretMgr["🔐 Google Secret Manager<br/>GEMINI_API_KEY & App Secrets"]
+    end
+
+    subgraph AIEngine ["Google AI Foundation Layer"]
+        Gemini["🤖 Google Gemini 3.5 / 2.0 Flash<br/>(Socratic Multi-turn Reasoning)"]
+    end
+
+    Learner -->|Solves scenarios & Reflects| SPA
+    Creator -->|Builds scenarios & inspects heatmaps| SPA
+    Admin -->|Audits compliance| SPA
+
+    SPA -->|REST API / WebSockets| Gateway
+    Gateway --> API
+    Gateway --> Relay
+
+    API -->|Delegates Socratic Loop| Orchestrator
+    Orchestrator -->|Executes 4-Phase Pipeline| Gemini
+    
+    API -->|CRUD & Relations| Postgres
+    Relay -->|Streams Silent Telemetry| Firestore
+    API -->|Session Caching| RedisStore
+    API -->|Fetches Credentials| SecretMgr
