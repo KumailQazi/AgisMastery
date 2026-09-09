@@ -172,7 +172,7 @@ terraform apply
 
 ## 🎥 Demo Video (Under 4 Minutes)
 
-* **Video Link:** [Watch Demo Video on YouTube](https://youtu.be/YOUR_DEMO_VIDEO_ID)
+* **Video Link:** [Watch Demo Video on YouTube](https://www.youtube.com/watch?v=DfD5VS0bg58)
 * **Timestamp Script:**
   * `0:00 - 0:15`: Problem Hook & Live Scenario Decision Player.
   * `0:15 - 1:45`: Google ADK Socratic Agent & Multi-Turn Reflection Dialogue.
